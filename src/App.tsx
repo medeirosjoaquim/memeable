@@ -1,6 +1,7 @@
 import html2canvas from 'html2canvas'
 import React, { useEffect, useRef, useState } from 'react'
 import './App.css'
+import { b64toBlob } from './helpers/imgGenerator'
 function App() {
 
   const [imgSrc, setImgSrc] = useState<string>('')
@@ -13,7 +14,7 @@ function App() {
   const handleMemeText = (text: string) => setMemeText(text)
   //rerouteToGoogle= () => window.open('www.google.com', "_blank")
   //https://stackoverflow.com/questions/61935193/how-to-show-base64-image-on-browsers-new-tab
-  const handleDownload = () => window.open(base64IMG, "_blank")
+  const handleDownload = () => b64toBlob(base64IMG) //window.open(base64IMG, "_blank")
   const handleFileUpload = (e: any) => {
     const [file] = e.target.files
     const reader = new FileReader()
