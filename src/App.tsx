@@ -41,10 +41,10 @@ function App() {
   const handleColorChange = (e: any) => setMemeTextcolor(e.target.value)
 
   useEffect(() => {
-    if (imgSrc || memeTextcolor) printMeme()
+    if (imgSrc || memeText || memeTextcolor) printMeme()
     return () => {
     }
-  }, [imgSrc, memeTextcolor])
+  }, [imgSrc, memeTextcolor, memeText])
 
   return (
     <div className="app">
