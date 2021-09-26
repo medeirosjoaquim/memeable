@@ -15,6 +15,7 @@ function App() {
   //rerouteToGoogle= () => window.open('www.google.com', "_blank")
   //https://stackoverflow.com/questions/61935193/how-to-show-base64-image-on-browsers-new-tab
   const handleDownload = () => b64toBlob(base64IMG) //window.open(base64IMG, "_blank")
+
   const handleFileUpload = (e: any) => {
     const [file] = e.target.files
     const reader = new FileReader()
@@ -39,10 +40,10 @@ function App() {
   const handleColorChange = (e: any) => setMemeTextcolor(e.target.value)
 
   useEffect(() => {
-    if (imgSrc) printMeme()
+    if (imgSrc || memeText || memeTextcolor) printMeme()
     return () => {
     }
-  }, [imgSrc])
+  }, [imgSrc, memeText, memeTextcolor])
 
   return (
     <div className="app">
@@ -61,7 +62,6 @@ function App() {
           <div className="text-container">
             <div className=" "
               style={{ color: memeTextcolor, fontSize: 42, fontWeight: 'bold' }}
-
             >{memeText}</div>
           </div>
         </div>
