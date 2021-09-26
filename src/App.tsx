@@ -1,6 +1,7 @@
 import html2canvas from 'html2canvas'
 import React, { useEffect, useRef, useState } from 'react'
 import './App.css'
+import { debounce } from './helpers/debounce'
 import { b64toBlob } from './helpers/imgGenerator'
 function App() {
 
@@ -11,7 +12,7 @@ function App() {
   const uploadInput = useRef<HTMLInputElement>(null);
   const printRef = useRef<HTMLDivElement>(null);
 
-  const handleMemeText = (text: string) => setMemeText(text)
+  const handleMemeText = (text: string) => debounce(setMemeText(text), 500)
   //rerouteToGoogle= () => window.open('www.google.com', "_blank")
   //https://stackoverflow.com/questions/61935193/how-to-show-base64-image-on-browsers-new-tab
   const handleDownload = () => b64toBlob(base64IMG) //window.open(base64IMG, "_blank")
@@ -40,10 +41,10 @@ function App() {
   const handleColorChange = (e: any) => setMemeTextcolor(e.target.value)
 
   useEffect(() => {
-    if (imgSrc || memeText || memeTextcolor) printMeme()
+    if (imgSrc || memeTextcolor) printMeme()
     return () => {
     }
-  }, [imgSrc, memeText, memeTextcolor])
+  }, [imgSrc, memeTextcolor])
 
   return (
     <div className="app">
@@ -78,17 +79,18 @@ function App() {
           <button className="download-btn" onClick={handleDownload}>Download</button>
         }
 
-        <input className="meme-input"
-          type="text"
-          name=""
-          id=""
-          onChange={e => handleMemeText(e.target.value)} />
-        <input type="color"
-          name="color"
-          onChange={handleColorChange}
-          onInput={handleColorChange}
-          id="color" />
+
       </div>
+      <input className="meme-input"
+        type="text"
+        name=""
+        id=""
+        onChange={e => handleMemeText(e.target.value)} />
+      <input type="color"
+        name="color"
+        onChange={handleColorChange}
+        onInput={handleColorChange}
+        id="color" />
     </div>
   )
 }
